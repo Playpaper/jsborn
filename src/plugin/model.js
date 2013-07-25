@@ -35,7 +35,7 @@ JSB.extendPlugin(JSB.oop("jsborn.plugin.model", {
 		// _test();
 		// this.test1();
 		dd.addListener('destroy',function(){
-			console.log("START::model");
+
 			for (var i = 0; i < dd.PLUGIN_MODEL.model.length; i++) {
 
 				var _ns = dd.PLUGIN_MODEL.model[i];
@@ -43,7 +43,7 @@ JSB.extendPlugin(JSB.oop("jsborn.plugin.model", {
 				_ns.destroy();
 
 			};
-			console.log("END::model");
+
 		});
 
 	},
@@ -184,7 +184,7 @@ JSB.oop("jsborn.plugin.model.node",{
 		dd._ary_listeners = [];
 
 		dd.addListener('destroy',function(){
-			console.log("jsborn.plugin.model.node destroy");
+
 		})
 
 	},

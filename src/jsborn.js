@@ -386,22 +386,26 @@
 
 					var _ns_class = me.getClass(name);
 
+					obj.plugins = obj.plugins?obj.plugins:[];
+
+					this.plugins = this.plugins?this.plugins:[];
+
+					this.plugins = jQuery.merge(this.plugins, obj.plugins);
+
 					if(!_ns_class.config.plugin&&!_ns_class.config.core){
 
-						this.plugins = obj.plugins?obj.plugins:[];
-
-						if(jQuery.isArray(this.plugins)){
-							this.plugins = jQuery.merge(this.plugins,JSB.config.extendPlugins);
-							var _ary_result = [];
-							jQuery.each(this.plugins, function(i, e) {
-								if (jQuery.inArray(e, _ary_result) == -1){
-									_ary_result.push(e);
-								}
-							});
-							this.plugins = _ary_result;
-						}
+						this.plugins = jQuery.merge(this.plugins,JSB.config.extendPlugins);
+						var _ary_result = [];
+						jQuery.each(this.plugins, function(i, e) {
+							if (jQuery.inArray(e, _ary_result) == -1){
+								_ary_result.push(e);
+							}
+						});
+						this.plugins = _ary_result;
 
 					}
+
+					this._name = name;
 
 					this._count = 0;
 
@@ -598,6 +602,14 @@
 						JSB.echo("error",this,"already destroy");
 						return true;
 					}
+
+					var _ns_cls = JSB.getClass(this._name);
+
+					for (var i = 0; i < _ns_cls.config.nodes.length; i++) {
+						if(_ns_cls.config.nodes[i]==this){
+							_ns_cls.config.nodes.splice(i,1);
+						}
+					};
 
 					jQuery(this).triggerHandler('oop.destroy',this);
 

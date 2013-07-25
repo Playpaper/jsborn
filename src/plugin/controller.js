@@ -111,10 +111,6 @@ JSB.extendPlugin(JSB.oop("jsborn.plugin.controller", {
 
 			var _str_cls = jQuery(this).attr("jsb-oop");
 
-			var _str_d_e  = jQuery(this).attr("jsb-oop-register");
-			
-			var _ary_key  = _str_d_e.split(':');
-
 			var _ns_class = JSB.create(_str_cls);
 
 			dd.PLUGIN_CONTROLLER.nodes.push(_ns_class);
