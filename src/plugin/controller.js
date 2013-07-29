@@ -1,4 +1,4 @@
-JSB.extendPlugin(JSB.oop("jsborn.plugin.controller", {
+JSB.extendPlugin(JSB.cls("jsborn.plugin.controller", {
 
 	depends:[
 		"jsborn.core.model",
@@ -137,7 +137,7 @@ JSB.extendPlugin(JSB.oop("jsborn.plugin.controller", {
 
 			var _func_cb = dd[_str_cb];
 
-			jQuery(this).off(_str_event).on(_str_event,{scope:dd}, function(e) {
+			jQuery(this)[JSB.event.off](_str_event)[JSB.event.on](_str_event,{scope:dd}, function(e) {
 
 				if (jQuery.isFunction(_func_cb)) {
 					_func_cb.apply(this, arguments);

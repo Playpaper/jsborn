@@ -1,4 +1,4 @@
-JSB.extendCore("model",JSB.oop("jsborn.core.model", {
+JSB.extendCore("model",JSB.cls("jsborn.core.model", {
 
 	initialize: function() {
 
@@ -56,10 +56,6 @@ JSB.extendCore("model",JSB.oop("jsborn.core.model", {
 		
 		return _obj_data;
 
-	},
-
-	setObjKey: function (obj, str_key, value) {
-		
 	},
 
 	_check_obj_diff:function(obj_org,obj_mod){

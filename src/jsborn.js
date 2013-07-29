@@ -1,58 +1,89 @@
 (function(window) {
 
+	var _a_ver = jQuery.fn.jquery.split('.');
+
+	var _s_e_o = "on";
+
+	var _s_e_f = "off";
+
+	if(_a_ver[1]<7){
+		_s_e_o = "bind";
+		_s_e_f = "unbind";
+	}
+
 	var JSB = {
 
 		version:'0.5a',
+
+		event:{
+			on  : _s_e_o,
+			off : _s_e_f,
+		},
 
 		data:{
 
 			cores    : {},
 			
-			oops     : {},
+			clss     : {},
 			
 			plugins  : {},
 			
-			requires : []
+			imports : []
 
 		},
 
 		config:{
 
-			console:false,
+			console:true,
 			
-			createRequire :false,
+			createImport :false,
 			
 			extendPlugins :[],
 
-			require:{
+			importSetup:{
 				ext:[".js"],
-				path:'',
+				library:'',
+				source:'',
 				parserURL:function(url){
 
 					var _str_url  = '';
 
-					if (url.match(/(http|https):\/\//g)) {
+					if (url.match(/^(http|https):\/\//g)) {
+
+						var _str_domain = url 
+
+						_str_domain = _str_domain.match(/^(https|http):\/\/(.*?)\//g)[0].replace(/(https|http|:|\/)/g,'');
+
+						if(_str_domain!=window.location.hostname){
+
+							JSB.echo("error","imports need sample domain",url);
+
+						}
 
 						_str_url = url;
+
 
 					} else {
 
 						var _str_basename = url.replace(/\\/g, '/').replace(/.*\//, '');
 
-						for (var i = 0; i < JSB.config.require.ext.length; i++) {
+						for (var i = 0; i < JSB.config.importSetup.ext.length; i++) {
 
-							var _str_ext = JSB.config.require.ext[i];
-							
-							if (_str_basename.indexOf(_str_ext) == -1) {
+							var _str_ext = JSB.config.importSetup.ext[i];
+
+							if (_str_basename.substr(_str_basename.length,-_str_ext.length) != _str_ext) {
 								
 								_str_url  = url.replace(/\./g, '/');
 								
-								_str_url  = JSB.config.require.path + _str_url + _str_ext;
+								if(url.match(/^jsborn\./g) == -1){
+									_str_url  = JSB.config.importSetup.library + _str_url + _str_ext;
+								}else{
+									_str_url  = JSB.config.importSetup.source + _str_url + _str_ext;
+								}
 								
 								break;
 
 							}else {
-
 								_str_url = url;
 
 							}
@@ -70,43 +101,13 @@
 
 		addListener:function(str_event,func_cb,ns_scope){
 
-			jQuery(JSB).on('jsb.'+str_event,{scope:ns_scope},func_cb);
-
-		},
-
-		removeListener:function(str_event){
-
-			jQuery(JSB).off('jsb.'+str_event);
-
-		},
-
-		echo:function(str_type){
-
-			if(console&&JSB.config.console){
-				
-				if(console[str_type]){
-
-					var _ary_cb = [];
-					
-					for (var i = 1; i < arguments.length; i++) {
-						_ary_cb.push(arguments[i]);
-					};
-
-					console[str_type].apply(console,_ary_cb);
-
-				}else{
-
-					JSB.echo("log","console no "+str_type+" method.");
-
-				}
-
-			}
+			jQuery(JSB)[JSB.event.on]('jsb.'+str_event,{scope:ns_scope},func_cb);
 
 		},
 
 		create: function(class_name, options) {
 
-			if(JSB.config.createRequire){
+			if(JSB.config.createImport){
 				this._check_class(class_name);
 			}
 
@@ -141,14 +142,26 @@
 
 		},
 
-		getCore:function(_str_name){
+		echo:function(str_type){
 
-			var me = this;
+			if(console&&JSB.config.console){
+				
+				if(console[str_type]){
 
-			if (me.data.cores[_str_name]) {
-				return me.data.cores[_str_name];
-			} else {
-				return false;
+					var _ary_cb = [];
+					
+					for (var i = 1; i < arguments.length; i++) {
+						_ary_cb.push(arguments[i]);
+					};
+
+					console[str_type](_ary_cb);
+
+				}else{
+
+					JSB.echo("log","console no "+str_type+" method.");
+
+				}
+
 			}
 
 		},
@@ -228,12 +241,24 @@
 
 		},
 
+		getCore:function(_str_name){
+
+			var me = this;
+
+			if (me.data.cores[_str_name]) {
+				return me.data.cores[_str_name];
+			} else {
+				return false;
+			}
+
+		},
+
 		getClass: function(_str_name) {
 
 			var me = this;
 
-			if (me.data.oops[_str_name]) {
-				return me.data.oops[_str_name];
+			if (me.data.clss[_str_name]) {
+				return me.data.clss[_str_name];
 			} else {
 				return false;
 			}
@@ -244,7 +269,7 @@
 
 			var me = this;
 
-			return me.data.oops;
+			return me.data.clss;
 
 		},
 
@@ -260,23 +285,23 @@
 
 		},
 
-		getRequireData: function() {
+		getImportData: function() {
 
-			return this.data.requires;
+			return this.data.imports;
 
 		},
 
-		require: function(_str_require) {
+		importClass: function(_str_import) {
 
 			var _str_url  = '';
 			
 			var _bool_status = true;
 
-			if (JSB._check_require(_str_require)) {
+			if (JSB._check_import(_str_import)) {
 				return true;
 			}
 
-			_str_url = JSB.config.require.parserURL(_str_require);
+			_str_url = JSB.config.importSetup.parserURL(_str_import);
 
 			jQuery.ajax({
 
@@ -295,7 +320,7 @@
 				},
 				success  : function() {
 					
-					JSB.data.requires.push({
+					JSB.data.imports.push({
 						name: _str_url,
 						status: _bool_status
 					});
@@ -305,6 +330,12 @@
 			});
 
 			return _bool_status;
+
+		},
+
+		removeListener:function(str_event){
+
+			jQuery(JSB).off('jsb.'+str_event);
 
 		},
 
@@ -318,13 +349,18 @@
 
 		},
 
-		_check_require: function(_str_extend) {
+		_check_import: function(_str_import) {
 
-			for (var i = 0; i < JSB.data.requires.length; i++) {
-				if (JSB.data.requires[i]["name"] == _str_extend) {
-					JSB.echo("log","same", JSB.data.requires[i], _str_extend);
+			for (var i = 0; i < JSB.data.imports.length; i++) {
+
+				if (JSB.data.imports[i]["name"] == _str_import) {
+
+					JSB.echo("log","same", JSB.data.imports[i], _str_import);
+
 					return true;
+
 				}
+
 			};
 
 			return false;
@@ -337,7 +373,7 @@
 
 			if (!me.getClass(_str_cls)) {
 
-				return me.require(_str_cls);
+				return me.importClass(_str_cls);
 
 			}
 
@@ -349,6 +385,8 @@
 
 			var me = this;
 
+
+
 			me._init_oop();
 
 		},
@@ -357,7 +395,7 @@
 
 			var me = this;
 
-			JSB.oop = function(name, obj) {
+			JSB.cls = function(name, obj) {
 
 				if (me.getClass(name)) {
 
@@ -367,7 +405,7 @@
 
 				}
 
-				var _jsb_oop = function(options) {
+				var _jsb_cls = function(options) {
 
 					var _str_extend = this.extend;
 
@@ -376,8 +414,8 @@
 						JSB._check_class(_str_extend);
 
 						jQuery.extend(
-							_jsb_oop.prototype, 
-							JSB.oop.prototype, 
+							_jsb_cls.prototype, 
+							JSB.cls.prototype, 
 							JSB.getClass(_str_extend)["cls"].prototype, 
 							obj
 						);
@@ -415,11 +453,11 @@
 
 					this._ary_plugin = [];
 					//插件初始化
-					this._plugin_init(_jsb_oop);
+					this._plugin_init(_jsb_cls);
 					//繼承
 					this._extend(this);
 					//載入依賴包
-					this._require();
+					this._import();
 
 					this.initialize(options);
 					//super
@@ -431,7 +469,7 @@
 
 				};
 
-				jQuery.extend(_jsb_oop.prototype, JSB.oop.prototype, obj);
+				jQuery.extend(_jsb_cls.prototype, JSB.cls.prototype, obj);
 
 				if(obj.single!==true){
 					obj.single = false;
@@ -441,7 +479,7 @@
 					obj.abstr = false;
 				}
 
-				me.data.oops[name] = {
+				me.data.clss[name] = {
 					config:{
 						name:name,
 						single:obj.single,
@@ -449,15 +487,15 @@
 						plugin:false,
 						core:false
 					},
-					cls:_jsb_oop
+					cls:_jsb_cls
 				};
 				// // 继承Class类基本属性
 
-				return me.data.oops[name];
+				return me.data.clss[name];
 
 			};
 
-			JSB.oop.prototype = {
+			JSB.cls.prototype = {
 
 				extend: '',
 
@@ -465,7 +503,7 @@
 
 				_ary_plugin: [],
 
-				_plugin_init:function(jsb_oop){
+				_plugin_init:function(jsb_cls){
 
 					var _ary_plugin = this.plugins;
 
@@ -490,7 +528,7 @@
 							_ns_plugin = JSB.getClass(this._ary_plugin[i])["cls"].prototype;
 							
 							jQuery.extend(
-								jsb_oop.prototype, 
+								jsb_cls.prototype, 
 								JSB.getPlugin(this._ary_plugin[i]).getPrototype()
 							);
 
@@ -552,15 +590,15 @@
 
 				},
 
-				_require: function() {
+				_import: function() {
 
-					if (this.requires) {
+					if (this.imports) {
 
-						for (var i = 0; i < this.requires.length; i++) {
+						for (var i = 0; i < this.imports.length; i++) {
 
-							var _str_require = this.requires[i];
+							var _str_import = this.imports[i];
 
-							JSB._check_class(_str_require);
+							JSB._check_class(_str_import);
 
 						}
 
@@ -580,7 +618,7 @@
 
 							this._count++;
 
-							_proto_class._require();
+							_proto_class._import();
 
 							_proto_class.initialize.apply(this);
 
@@ -611,7 +649,7 @@
 						}
 					};
 
-					jQuery(this).triggerHandler('oop.destroy',this);
+					jQuery(this).triggerHandler('cls.destroy',this);
 
 					jQuery(JSB).triggerHandler('jsb.destroy',this);
 
@@ -623,13 +661,13 @@
 
 				addListener:function(str_event,func_cb,ns_scope){
 
-					jQuery(this).on('oop.'+str_event,{scope:ns_scope},func_cb);
+					jQuery(this)[JSB.event.on]('cls.'+str_event,{scope:ns_scope},func_cb);
 
 				},
 
 				removeListener:function(str_event){
 
-					jQuery(this).off('oop.'+str_event);
+					jQuery(this)[JSB.event.off]('cls.'+str_event);
 
 				},				
 

@@ -1,4 +1,4 @@
-JSB.extendPlugin(JSB.oop("jsborn.plugin.model", {
+JSB.extendPlugin(JSB.cls("jsborn.plugin.model", {
 
 	depends:["jsborn.core.model"],
 
@@ -132,7 +132,7 @@ JSB.extendPlugin(JSB.oop("jsborn.plugin.model", {
 
 }));
 
-JSB.oop("jsborn.plugin.model.node",{
+JSB.cls("jsborn.plugin.model.node",{
 
 	setData:function(obj_data){
 

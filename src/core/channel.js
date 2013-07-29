@@ -1,4 +1,4 @@
-JSB.extendCore("channel",JSB.oop("jsborn.core.channel", {
+JSB.extendCore("channel",JSB.cls("jsborn.core.channel", {
 
 	addChannel:function(str_room){
 
@@ -40,7 +40,7 @@ JSB.extendCore("channel",JSB.oop("jsborn.core.channel", {
 
 		_obj_room["member"].push(ns_scope);		
 
-		jQuery(this).on(str_room,{scope:ns_scope},function(e){
+		jQuery(this)[JSB.event.on](str_room,{scope:ns_scope},function(e){
 			func_cb.apply(ns_scope,arguments);
 		});
 
