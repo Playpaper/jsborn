@@ -665,6 +665,12 @@
 
 				},
 
+				dispatchEvent:function(str_event,obj_data){
+
+					jQuery(this).triggerHandler('cls.'+str_event,this,obj_data);
+
+				},
+
 				removeListener:function(str_event){
 
 					jQuery(this)[JSB.event.off]('cls.'+str_event);

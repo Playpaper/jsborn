@@ -122,18 +122,20 @@ JSB.extendPlugin(JSB.cls("jsborn.plugin.controller", {
 	},
 
 	_auto_bind: function(func) {
-
+		
 		var dd = this;
-
+		
 		this.select().find("[jsb-event]").filter(function() {
 
 			return !$(this).parentsUntil(dd.select(), "[jsb-oop]").length;
 
 		}).each(function(i, k) {
-
-			var _str_event = jQuery(this).attr("jsb-event");
-
-			var _str_cb = jQuery(this).attr("jb-cb");
+			
+			var _ary_key  = jQuery(this).attr("jsb-event").split(':');
+			
+			var _str_event  = _ary_key[0];
+			
+			var _str_cb = _ary_key[1];
 
 			var _func_cb = dd[_str_cb];
 
