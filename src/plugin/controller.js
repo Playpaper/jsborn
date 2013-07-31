@@ -12,7 +12,7 @@ JSB.extendPlugin(JSB.cls("jsborn.plugin.controller", {
 		return {
 			registerEvent: dd._auto_bind,
 
-			registerOOP: dd._auto_class,
+			registerClass: dd._auto_class,
 
 			registerData: dd._auto_data,
 
@@ -57,7 +57,7 @@ JSB.extendPlugin(JSB.cls("jsborn.plugin.controller", {
 
 		this.select().find("[jsb-data]").filter(function() {
 
-			return !$(this).parentsUntil(dd.select(), "[jsb-oop]").length;
+			return !$(this).parentsUntil(dd.select(), "[jsb-cls]").length;
 
 		}).each(function(i, k) {
 
@@ -103,19 +103,19 @@ JSB.extendPlugin(JSB.cls("jsborn.plugin.controller", {
 
 		var dd = this;
 
-		this.select().find("[jsb-oop]").filter(function() {
+		this.select().find("[jsb-cls]").filter(function() {
 
-			return !$(this).parentsUntil(dd.select(), "[jsb-oop]").length;
+			return !$(this).parentsUntil(dd.select(), "[jsb-cls]").length;
 
 		}).each(function(i, k) {
 
-			var _str_cls = jQuery(this).attr("jsb-oop");
+			var _str_cls = jQuery(this).attr("jsb-cls");
 
 			var _ns_class = JSB.create(_str_cls);
 
 			dd.PLUGIN_CONTROLLER.nodes.push(_ns_class);
 
-			jQuery(dd).triggerHandler('oop.controller.create',[_ns_class,k]);
+			jQuery(dd).triggerHandler('cls.controller.create',[_ns_class,k]);
 
 		});
 
@@ -127,7 +127,7 @@ JSB.extendPlugin(JSB.cls("jsborn.plugin.controller", {
 		
 		this.select().find("[jsb-event]").filter(function() {
 
-			return !$(this).parentsUntil(dd.select(), "[jsb-oop]").length;
+			return !$(this).parentsUntil(dd.select(), "[jsb-cls]").length;
 
 		}).each(function(i, k) {
 			
