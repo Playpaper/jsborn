@@ -153,7 +153,7 @@ JSB.cls("jsborn.plugin.model.node",{
 
 		var dd = this;
 
-		return jQuery(true,{},dd._obj_data.data);
+		return jQuery.extend(true,{},dd._obj_data.data);
 
 	},
 
@@ -163,7 +163,7 @@ JSB.cls("jsborn.plugin.model.node",{
 
 		dd._obj_data.data = obj_data;
 
-		return jQuery(true,{},dd._obj_data.data);
+		return jQuery.extend(true,{},dd._obj_data.data);
 
 	},
 
