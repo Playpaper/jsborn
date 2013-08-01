@@ -202,7 +202,7 @@ JSB.cls("jsborn.plugin.model.node",{
 
 		var dd = this;
 
-		dd.setData(options);
+		dd.setOption(options);
 
 		dd._ary_listeners = [];
 
