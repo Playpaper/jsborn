@@ -704,4 +704,4 @@
 
 	window.JSB = JSB;
 
-})(window););
+})(window);
