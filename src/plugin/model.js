@@ -157,6 +157,16 @@ JSB.cls("jsborn.plugin.model.node",{
 
 	},
 
+	setData:function(obj_data){
+
+		var dd = this;
+
+		dd._obj_data.data = obj_data;
+
+		return jQuery(true,{},dd._obj_data.data);
+
+	},
+
 	setOption:function(obj_data){
 
 		var dd = this;
@@ -193,7 +203,7 @@ JSB.cls("jsborn.plugin.model.node",{
 
 		};
 
-		dd.getData() = obj_data;
+		dd.setData(obj_data);
 		// console.log(diff);
 
 	},
