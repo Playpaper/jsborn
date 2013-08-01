@@ -88,8 +88,8 @@ JSB.extendCore("model",JSB.cls("jsborn.core.model", {
 						return false;
 					}
 					ret = dd._check_obj_diff(obj_val, val);
-					if (!jQuery.isEmptyObject(ret.mod)){
-						_obj_mod[key] = jQuery.extend(true, {}, ret.mod);
+					if (!jQuery.isEmptyObject(ret.modify)){
+						_obj_mod[key] = jQuery.extend(true, {}, ret.modify);
 					}
 					if (!jQuery.isEmptyObject(ret.add)){
 						_obj_add[key] = jQuery.extend(true, {}, ret.add);
@@ -111,7 +111,7 @@ JSB.extendCore("model",JSB.cls("jsborn.core.model", {
 		});
 
 		return {
-			mod: _obj_mod,
+			modify: _obj_mod,
 			add: _obj_add,
 			del: _obj_del
 		};

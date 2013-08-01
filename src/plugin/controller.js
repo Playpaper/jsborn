@@ -78,7 +78,7 @@ JSB.extendPlugin(JSB.cls("jsborn.plugin.controller", {
 			var _obj_ctrl = dd.PLUGIN_CONTROLLER;
 
 			if(jQuery.isEmptyObject(_str_d_e)){
-				_str_d_e = "mod";
+				_str_d_e = "modify";
 			}
 
 			if(jQuery.inArray(_el[0].tagName, _obj_ctrl.tag)==-1){
