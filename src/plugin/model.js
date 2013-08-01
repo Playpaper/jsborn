@@ -1,3 +1,18 @@
+/**
+ * Copyright jsborn.org [tureki11@gmail.com]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 JSB.extendPlugin(JSB.cls("jsborn.plugin.model", {
 
 	depends:["jsborn.core.model"],
@@ -64,7 +79,7 @@ JSB.extendPlugin(JSB.cls("jsborn.plugin.model", {
 
 			var _ns_model_node = dd.PLUGIN_MODEL.model[i];
 			
-			if(_ns_model_node.getData().key==str_key){
+			if(_ns_model_node.getOption().key==str_key){
 				return _ns_model_node;
 			}
 
@@ -117,7 +132,7 @@ JSB.extendPlugin(JSB.cls("jsborn.plugin.model", {
 
 			var _ns_model_node = dd.PLUGIN_MODEL.model[i];
 			
-			if(_ns_model_node.getData().key==str_key){
+			if(_ns_model_node.getOption().key==str_key){
 
 				dd.PLUGIN_MODEL.model.splice(i,1);
 
@@ -134,7 +149,15 @@ JSB.extendPlugin(JSB.cls("jsborn.plugin.model", {
 
 JSB.cls("jsborn.plugin.model.node",{
 
-	setData:function(obj_data){
+	getData:function(){
+
+		var dd = this;
+
+		return jQuery(true,{},dd._obj_data.data);
+
+	},
+
+	setOption:function(obj_data){
 
 		var dd = this;
 
@@ -144,7 +167,7 @@ JSB.cls("jsborn.plugin.model.node",{
 
 	},
 
-	getData:function(){
+	getOption:function(){
 
 		var dd = this;
 
@@ -162,7 +185,7 @@ JSB.cls("jsborn.plugin.model.node",{
 			
 			var _ns_scope = _obj_listener.scope?_obj_listener.scope:dd;
 			
-			var _obj_diff = JSB.core.model.getObjtDiff(dd.getData().data, obj_data,_obj_listener.type);
+			var _obj_diff = JSB.core.model.getObjtDiff(dd.getData(), obj_data,_obj_listener.type);
 
 			if(!jQuery.isEmptyObject(_obj_diff)){
 				_obj_listener.func.apply(_ns_scope,[_obj_diff]);	
@@ -170,7 +193,7 @@ JSB.cls("jsborn.plugin.model.node",{
 
 		};
 
-		dd.getData().data = obj_data;
+		dd.getData() = obj_data;
 		// console.log(diff);
 
 	},

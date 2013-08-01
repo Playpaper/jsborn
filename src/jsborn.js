@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 (function(window) {
 
 	var _a_ver = jQuery.fn.jquery.split('.');
@@ -705,4 +704,4 @@
 
 	window.JSB = JSB;
 
-})(window);
+})(window););
