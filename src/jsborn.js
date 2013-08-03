@@ -597,7 +597,7 @@
 
 				dispatchEvent:function(str_event,obj_data){
 
-					_q(this).triggerHandler('cls.'+str_event,this,obj_data);
+					_q(this).triggerHandler('cls.'+str_event,[this,obj_data]);
 
 				},
 
