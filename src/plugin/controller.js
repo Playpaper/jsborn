@@ -103,7 +103,7 @@ JSB.extendPlugin(JSB.cls("jsborn.plugin.controller", {
 				_str_ctrl = "val";
 			}
 
-			dd.getModel(_str_key).listener(_str_d_e,function(obj){
+			dd.getModel(_str_key).addListener("model-"+_str_d_e,function(e,scope,obj){
 
 				var _misc_val = JSB.core.model.getObjKey(obj,_str_name);
 
