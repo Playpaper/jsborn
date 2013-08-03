@@ -24,15 +24,15 @@ JSB.extendPlugin(JSB.cls("jsborn.plugin.model", {
 
 		return {
 
+			addModel    : dd._add_model,
+			
+			delModel    : dd._del_model,
+			
+			getModel    : dd._get_model,
+
 			getModelData: dd._get_model_data,
-
-			getModel: dd._get_model,
-
-			setModel: dd._set_model,
-
-			delModel: dd._del_model,
-
-			addModel: dd._add_model
+			
+			setModel    : dd._set_model
 
 		};
 
@@ -102,11 +102,6 @@ JSB.extendPlugin(JSB.cls("jsborn.plugin.model", {
 	},
 
 	_add_model:function(str_key,obj_data){
-
-		// if(jQuery.type(str_key) !== "string"){
-		// 	console.error("bindModel:key need string");
-		// 	return false;
-		// }
 
 		var dd = this;
 

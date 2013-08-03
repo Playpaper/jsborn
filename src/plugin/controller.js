@@ -26,17 +26,19 @@ JSB.extendPlugin(JSB.cls("jsborn.plugin.controller", {
 		var dd = this;
 
 		return {
-			registerEvent: dd._auto_event,
 
+			getRoot      : dd._get_root,
+			
 			registerClass: dd._auto_class,
 
-			registerData: dd._auto_data,
+			registerData : dd._auto_data,
 
-			setRoot: dd._set_root,
-
-			getRoot: dd._get_root,
-
-			select: dd._select
+			registerEvent: dd._auto_event,
+			
+			select       : dd._select,
+			
+			setRoot      : dd._set_root
+			
 		};
 
 	},
