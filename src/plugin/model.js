@@ -189,15 +189,15 @@ JSB.cls("jsborn.plugin.model.node",{
 		var _obj_diff = JSB.core.model.getObjtDiff(dd.getData(), obj_data,"all");
 
 		if(!jQuery.isEmptyObject(_obj_diff.add)){
-			dd.dispatchEvent("model-add");
+			dd.dispatchEvent("model-add",_obj_diff.add);
 		}
 
 		if(!jQuery.isEmptyObject(_obj_diff.del)){
-			dd.dispatchEvent("model-del");
+			dd.dispatchEvent("model-del",_obj_diff.del);
 		}
 
 		if(!jQuery.isEmptyObject(_obj_diff.modify)){
-			dd.dispatchEvent("model-modify");
+			dd.dispatchEvent("model-modify",_obj_diff.modify);
 		}
 			
 		dd.setData(obj_data);

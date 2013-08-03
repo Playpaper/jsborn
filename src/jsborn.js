@@ -329,7 +329,7 @@
 
 				if (me._get_class(name)) {
 
-					me.echo("error","CLASS:'" + name + "' define again");
+					me.echo("warn","CLASS:'" + name + "' define again");
 
 					return true;
 
