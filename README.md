@@ -1,10 +1,8 @@
 # [JSBorn v0.5a](http://jsborn.org)
 
-JSBorn : 輕量級的JavaScript Library，讓 JavaScript 實現物件化，繼承，模組等功能。
+Alpha版本，還有很多問題和需要加強的地方，若有問題或想法可 聯絡我。
 
-
-
-enjoy it!
+所有關於JSBorn的相關資料都在 [http://jsborn.org](http://jsborn.org)!
 
 
 
@@ -18,5 +16,5 @@ enjoy it!
 
 ## Copyright and license
 
-Copyright 2012 Twitter, Inc under [the Apache 2.0 license](LICENSE).
+Copyright 2013 JSBorn, Org under [the Apache 2.0 license](LICENSE).
 
