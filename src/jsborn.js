@@ -271,6 +271,53 @@
 
 		},
 
+		require:function(ary_source,func_s,func_e,scope){
+
+			var _ary_def = [];
+
+			var _int_id = "req:"+(new Date()).getTime();
+
+			scope = scope?scope:JSB;
+
+			_q(JSB).triggerHandler('jsb.requireStart',[_int_id,ary_source]);
+			
+			for (var i = 0; i < ary_source.length; i++) {
+				
+				_ary_def.push(_q.ajax({
+
+					url      : ary_source[i],
+					
+					dataType : "script",
+					
+					timeout:3000,
+
+					complete:function(jqXHR,textStatus){
+						console.log(textStatus)
+						_q(JSB).triggerHandler('jsb.requireProgress',_int_id,ary_source[i],textStatus);
+
+					}
+
+				}));
+
+			};
+
+			_q.when.apply(_q, _ary_def)
+
+			.done(function(){
+				if(_q.isFunction(func_s)){
+					func_s.apply(scope,arguments);
+				}
+				_q(JSB).triggerHandler('jsb.requireEnd',_int_id,"done");
+			})
+			.fail(function(){
+				if(_q.isFunction(func_e)){
+					func_e.apply(scope,arguments);
+				}
+				_q(JSB).triggerHandler('jsb.requireEnd',_int_id,"fail");
+			});
+
+		},
+
 		setConfig:function(obj){
 
 			var me = this;
@@ -316,8 +363,6 @@
 		_init: function() {
 
 			var me = this;
-
-
 
 			me._init_oop();
 
@@ -421,7 +466,6 @@
 					},
 					cls:_jsb_cls
 				};
-				// // 继承Class类基本属性
 
 				return me.data.clss[name];
 
