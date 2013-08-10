@@ -18,47 +18,9 @@ JSB.extendCore("assets",JSB.cls("jsborn.core.assets", {
 
 	imports:["jquery.plugins.jsrender"],
 
-	setConfig:function(obj){
-
-		this._obj_template = jQuery.extend(true,{},this._obj_template,obj);
-
-		return this._obj_template;
-
-	},
-
 	getConfig:function(){
 
 		return this._obj_template;
-
-	},
-
-	initialize: function(options) {
-
-		this._obj_template = {
-			path:'',
-			cache:false,
-			timeout:3000
-		};
-
-		this.ary_tpls = [];
-
-		this.ary_csss = [];
-		
-	},
-
-	removeTPL:function(str_name){
-
-		var me = this;
-
-		return me._remove_source(str_name,"tpl");
-
-	},
-
-	removeCSS:function(str_name){
-
-		var me = this;
-
-		return me._remove_source(str_name,"css");
 
 	},
 
@@ -168,6 +130,44 @@ JSB.extendCore("assets",JSB.cls("jsborn.core.assets", {
 		};
 
 		return jQuery.when.apply(jQuery, _ary_def);
+		
+	},
+
+	removeCSS:function(str_name){
+
+		var me = this;
+
+		return me._remove_source(str_name,"css");
+
+	},
+
+	removeTPL:function(str_name){
+
+		var me = this;
+
+		return me._remove_source(str_name,"tpl");
+
+	},
+
+	setConfig:function(obj){
+
+		this._obj_template = jQuery.extend(true,{},this._obj_template,obj);
+
+		return this._obj_template;
+
+	},
+
+	initialize: function(options) {
+
+		this._obj_template = {
+			path:'',
+			cache:false,
+			timeout:3000
+		};
+
+		this.ary_tpls = [];
+
+		this.ary_csss = [];
 		
 	},
 
