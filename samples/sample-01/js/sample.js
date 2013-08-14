@@ -1,3 +1,4 @@
+alert("XD");
 JSB.cls("js.sample", {
 	
 	imports:[
